@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show edit update destroy ]
+  before_action :set_list
 
   # GET /items or /items.json
   def index
@@ -25,7 +26,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.save
-        format.html { redirect_to item_url(@item), notice: "Item was successfully created." }
+        format.html { redirect_to list_item_url(@list, @item), notice: "Item was successfully created." }
         format.json { render :show, status: :created, location: @item }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +39,7 @@ class ItemsController < ApplicationController
   def update
     respond_to do |format|
       if @item.update(item_params)
-        format.html { redirect_to item_url(@item), notice: "Item was successfully updated." }
+        format.html { redirect_to list_item_url(@list, @item), notice: "Item was successfully updated." }
         format.json { render :show, status: :ok, location: @item }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +53,7 @@ class ItemsController < ApplicationController
     @item.destroy!
 
     respond_to do |format|
-      format.html { redirect_to items_url, notice: "Item was successfully destroyed." }
+      format.html { redirect_to list_items_path(@list), notice: "Item was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -62,6 +63,10 @@ class ItemsController < ApplicationController
     def set_item
       @item = Item.find(params[:id])
     end
+
+  def set_list
+    @list = List.find(params[:list_id])
+  end
 
     # Only allow a list of trusted parameters through.
     def item_params

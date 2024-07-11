@@ -1,7 +1,16 @@
 <div id="<%= dom_id list %>">
-  <p class="my-5">
+  <h3 class="my-5">
     <strong class="block font-medium mb-1">Title:</strong>
     <%= list.title %>
-  </p>
+  </h3>
+
+  <ul>
+    <% list.items.each do |item| %>
+      <li>
+        <strong class="block font-medium mb-1">Name:</strong>
+        <%= item.name %>
+      </li>
+    <% end %>
+  </ul>
 
 </div>
