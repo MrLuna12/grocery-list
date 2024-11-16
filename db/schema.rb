@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_16_223232) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_16_225243) do
+  create_table "grocery_items", force: :cascade do |t|
+    t.string "name"
+    t.integer "quantity"
+    t.integer "grocery_list_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grocery_list_id"], name: "index_grocery_items_on_grocery_list_id"
+  end
+
   create_table "grocery_lists", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "grocery_items", "grocery_lists"
 end
